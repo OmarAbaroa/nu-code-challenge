@@ -1,0 +1,15 @@
+{
+  "name": "nu",
+  "version": "1.0.0",
+  "description": "Code challenge for nu",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "nutest": "./bin/index.js"
+  },
+  "dependencies": {}
+}
