@@ -1,41 +1,65 @@
 #! /usr/bin/env node
-
-// Function to print the instructions
-const printInstructions = () => {
-  console.log("Please add an array or a blank link to finish.");
-};
+var fs = require("fs");
 
 // Function to get the inputs, calculate taxes and print the results
 const getTaxes = () => {
   const inputArrays = new Array();
   const readline = require("readline");
 
-  // Creating readline
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false,
-  });
+  try {
+    // Read input file to get inputs
+    var data = fs.readFileSync("input.txt", "utf8");
+    const inputs = data.split("\n");
 
-  printInstructions();
-
-  // Read the inputs
-  rl.on("line", (line) => {
-    if (line === "") {
-      // If the input is a blank line, then we can calculate the taxes
-      const taxes = calculateTaxes(inputArrays);
-
-      // Print the results
-      taxes.forEach((taxResult) => {
-        process.stdout.write(JSON.stringify(taxResult) + "\n");
+    if (inputs.length) {
+      inputs.forEach((input) => {
+        if (input !== "") inputArrays.push(JSON.parse(input));
       });
-      process.exit(0);
-    } else {
-      // Add input to an array and ask for more inputs
-      inputArrays.push(JSON.parse(line));
-      printInstructions();
     }
+
+    // Calling calcualte taxes function
+    const taxes = calculateTaxes(inputArrays);
+
+    // Calling function to print data in result file
+    printResults(taxes);
+  } catch (e) {}
+
+  // Code to read the inputs from console
+  // if (inputArrays.length > 0) {
+  //   // Creating readline
+  //   const rl = readline.createInterface({
+  //     input: process.stdin,
+  //     output: process.stdout,
+  //     terminal: false,
+  //   });
+
+  //   // Read the inputs
+
+  //   rl.on("line", (line) => {
+  //     if (line === "") {
+  //       // If the input is a blank line, then we can calculate the taxes
+  //       const taxes = calculateTaxes(inputArrays);
+  //       printResults(taxes);
+  //     } else {
+  //       // Add input to an array and ask for more inputs
+  //       inputArrays.push(JSON.parse(line));
+  //     }
+  //   });
+  // }
+};
+
+const printResults = (results) => {
+  // Print the results
+  let content = "";
+  results.forEach((taxResult) => {
+    content = content + JSON.stringify(taxResult) + "\n";
+    // Comented code to print data in the console
+    // process.stdout.write(JSON.stringify(taxResult) + "\n");
   });
+
+  fs.writeFileSync("./result.txt", content);
+
+  process.exit(0);
 };
 
 // Calculte the taxes
@@ -116,10 +140,11 @@ const calculateWeightedAveragePrice = (
   quantity,
   unitCost,
 ) => {
-  return (stock * weightedAverage + quantity * unitCost) / (stock + quantity);
+  return (
+    (stock * weightedAverage + quantity * unitCost) /
+    (stock + quantity)
+  ).toFixed(2);
 };
 
-// Welcome message
-console.log("Welcome to the code challenge, by Omar Abaroa");
 // Calling main function
 getTaxes();

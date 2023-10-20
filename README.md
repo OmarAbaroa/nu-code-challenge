@@ -1,6 +1,6 @@
 ## Code Challenge: Capital Gains
 
-Code challenge For Nu By Omar
+Code challenge For Nu
 
 # Tech Stack
 
@@ -14,11 +14,12 @@ Install globaly with the comand
 > npm install -g .
 > ```
 
-To run call the following command in the console (In the root of the project).
+- Create input.txt file with the list of operations arrays (one per line) and a blank line at the end of file
+- Run the following command
 
 > ```sh
 > nutest
 > ```
 
-- Add an array of operations per line as a string.
-- In order to finish add a blank link
+- To see the results look inside the result.txt file
+- To read the code, go to the index.js file inside the bin directory
