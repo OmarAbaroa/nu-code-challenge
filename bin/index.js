@@ -24,10 +24,11 @@ const getTaxes = () => {
     if (line === "") {
       // If the input is a blank line, then we can calculate the taxes
       const taxes = calculateTaxes(inputArrays);
-      console.log("Taxes", taxes);
+
       // Print the results
-      rl.write(JSON.stringify(taxes));
-      console.log("Thanks");
+      taxes.forEach((taxResult) => {
+        process.stdout.write(JSON.stringify(taxResult) + "\n");
+      });
       process.exit(0);
     } else {
       // Add input to an array and ask for more inputs
